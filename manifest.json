@@ -1,0 +1,14 @@
+{
+    "manifest_version": 3,
+    "name": "BulletBlock",
+    "version": "1.0",
+  
+    "description": "Removing Bullet Games from Lichess",
+
+    "content_scripts": [
+    {
+        "js" : ["content.js"],
+        "matches" : ["https://lichess.org/*"]
+    }]
+}
+  
