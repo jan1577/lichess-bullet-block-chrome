@@ -72,6 +72,11 @@ else if (document.querySelector("#main-wrap > main > div.lobby__app.lobby__app-r
 }
 
 
-
-
-
+// slider to create game
+// change min value to 7 (3 min)
+if (document.querySelector("#modal-wrap > div > div.setup-content > div.time-mode-config.optional-config > div.time-choice.range > input")){
+    slider = document.querySelector(
+        "#modal-wrap > div > div.setup-content > div.time-mode-config.optional-config > div.time-choice.range > input"
+    )
+    slider.min = 7;
+}
