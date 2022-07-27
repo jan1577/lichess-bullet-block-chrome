@@ -1,10 +1,22 @@
 {
     "manifest_version": 3,
-    "name": "BulletBlock",
+    "name": "LichessBulletBlock",
     "version": "1.0",
   
-    "description": "Removing Bullet Games from Lichess",
+    "description": "Remove Bullet Games from Lichess",
 
+    "icons": {
+        "16": "/images/icon16.png",
+        "48": "/images/icon48.png",
+        "128": "/images/icon128.png"
+    },
+    "action": {
+        "default_icon": {
+            "16": "/images/icon16.png",
+            "48": "/images/icon48.png",
+            "128": "/images/icon128.png"
+        }
+    },
     "content_scripts": [
     {
         "js" : ["content.js"],
