@@ -1,6 +1,6 @@
 // Saves options to chrome.storage
 function save_options() {
-    // check whihc box is checked and change value in storage
+    // check which box is checked and change value in storage
     var block_blitz;
     if(document.getElementById('block_blitz').checked) {
         block_blitz = true;
@@ -35,6 +35,7 @@ function save_options() {
     });
   }
   
+  // eventlistener
   document.addEventListener('DOMContentLoaded', restore_options);
   document.getElementById('save').addEventListener('click',
       save_options);
