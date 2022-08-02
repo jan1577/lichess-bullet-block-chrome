@@ -8,6 +8,15 @@
         "default-src" : "self",
         "frame-ancestors" : "none"
     },
+    
+    "options_ui": {
+        "page": "options.html",
+        "open_in_tab": false
+    },
+
+    "permissions": [
+        "storage"
+    ],
 
     "icons": {
         "16": "/images/16.png",
@@ -21,6 +30,7 @@
             "128": "/images/128.png"
         }
     },
+
     "content_scripts": [
     {
         "js" : ["content.js"],
