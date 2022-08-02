@@ -6,6 +6,11 @@ Bullet Games are addictive - this Chrome extension stops you from wasting your t
 It removes all options to start a Bullet Game, only allowing Blitz, Rapid, Classical and Variants.
 
 ## Setup
-Clone the repository or download as a ZIP-file and unzip. Make sure to name the folder "LichessBulletBlock". Next, go to chrome://extensions/ and turn on developer mode. 
+Clone the repository or download as a ZIP-file and unzip the files. Next, go to chrome://extensions/ and turn on developer mode. 
 Click "Load unpacked" and upload the folder. After installing, you can turn off developer mode.
+
+## Options
+With the latest update, the extension got an options page which can be found by right-clicking on the extension logo and navigation to "Options".
+Here, you can select whether you want to additionaly block Blitz Games. After saving, refresh the page to apply the changes.
+
 
