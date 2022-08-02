@@ -1,7 +1,6 @@
 // first time use: set value to false
 chrome.storage.local.get(['block_blitz_storage'], function(result) {
     if (result == null) {
-        console.log("undefined, setting storage")
         chrome.storage.local.set({'block_blitz_storage': false});
     }
   });
