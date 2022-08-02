@@ -149,27 +149,26 @@ if (document.querySelector("#main-wrap > main > div.round__app.variant-standard 
     chrome.storage.local.get(['block_blitz_storage'], function(result) {
         // check if blitz games are blocked
         if (result['block_blitz_storage']){
-
-            let substrings = ["1+0", "2+1", "3+0", "3+2", "5+0", "5+3"]
-            if (substrings.some(str => link.includes(str))){
-                // if the current game is a Bullet or Blitz Game, do not display the New Opponent button
-                document.querySelector("#main-wrap > main > div.round__app.variant-standard > div.rcontrols > div > a:nth-child(2)").style.display = "none";
-            }
-            else {
-                // if not a Bullet Game, display the New Opponent button
-                document.querySelector("#main-wrap > main > div.round__app.variant-standard > div.rcontrols > div > a:nth-child(2)").style.display = "block";
-            }
+            
+            let substrings = ["1+0", "2+1", "3+0", "3+2", "5+0", "5+3"];
+            compare_strings(substrings, link);
+            
         // else: only block bullet games
         } else {
             let substrings = ["1+0", "2+1"]
-            if (substrings.some(str => link.includes(str))){
-                // if the current game is a Bullet Game, do not display the New Opponent button
-                document.querySelector("#main-wrap > main > div.round__app.variant-standard > div.rcontrols > div > a:nth-child(2)").style.display = "none";
-            }
-            else {
-                // if not a Bullet Game, display the New Opponent button
-                document.querySelector("#main-wrap > main > div.round__app.variant-standard > div.rcontrols > div > a:nth-child(2)").style.display = "block";
-            }
+            compare_strings(substrings, link);
         }
     })
+}
+
+
+function compare_strings(substrings, link){
+    if (substrings.some(str => link.includes(str))){
+        // if the current game is a Bullet or Blitz Game, do not display the New Opponent button
+        document.querySelector("#main-wrap > main > div.round__app.variant-standard > div.rcontrols > div > a:nth-child(2)").style.display = "none";
+    }
+    else {
+        // if not a Bullet Game, display the New Opponent button
+        document.querySelector("#main-wrap > main > div.round__app.variant-standard > div.rcontrols > div > a:nth-child(2)").style.display = "block";
+    }
 }
