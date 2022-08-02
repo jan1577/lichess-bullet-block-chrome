@@ -25,10 +25,10 @@ const mutationObserver = new MutationObserver(mutations => {
 // adding the observer to the parent_lobby
 mutationObserver.observe(parent_lobby, {childList: true});
 
-/*
-* This function removes the two divs for Bullet Games in the Quick Pairing Menu
-* and, if set in the options, the four divs for Blitz Games.
-*/
+/**
+ * This function removes the two divs for Bullet Games in the Quick Pairing Menu
+ * and, if set in the options, the four divs for Blitz Games.
+ */
 function remove_elements_QP(){
     // remove bullet
     let _bullet1 = document.querySelector('[data-id="1+0"]');
@@ -53,10 +53,10 @@ function remove_elements_QP(){
     });
 }
 
-/*
-* This function waits for updates in the Lobby. Whenever new games are added,
-* {remove_bullet_lobby} is called to filter and remove the Bullet Games.
-*/
+/**
+ * This function waits for updates in the Lobby. Whenever new games are added,
+ * {remove_bullet_lobby} is called to filter and remove the Bullet Games.
+ */
 function lobby_open(){
 
     // add Mutation observer to <table class"hools__list"> to check if lobby is updated
@@ -73,10 +73,10 @@ function lobby_open(){
     
 }
 
-/*
-* This function removes elements from the lobby. It hides Bullet Games and, if 
-* set in the options, also Blitz Games by reading the games' titles
-*/
+/**
+ * This function removes elements from the lobby. It hides Bullet Games and, if 
+ * set in the options, also Blitz Games by reading the games' titles
+ */
 function remove_elements_lobby(){
 
     games_table = document.querySelector(
@@ -114,10 +114,10 @@ else if (document.querySelector("#main-wrap > main > div.lobby__app.lobby__app-r
 }
 
 
-/*
-* The slider is opened when the Create New Game button is clicked.
-* 7 equals three minutes, so the minimum value is set to 7.
-*/
+/**
+ * The slider is opened when the Create New Game button is clicked.
+ * 7 equals three minutes, so the minimum value is set to 7.
+ */
 
 if (document.querySelector("#modal-wrap > div > div.setup-content > div.time-mode-config.optional-config > div.time-choice.range > input")){
     let slider = document.querySelector(
@@ -135,9 +135,9 @@ if (document.querySelector("#modal-wrap > div > div.setup-content > div.time-mod
 
 
 /*
-* The following section is used to remove the "New Opponent" Button if the current game is 
-* a Bullet Game. Otherwise, the buttom remains displayed.
-*/
+ * The following section is used to remove the "New Opponent" Button if the current game is 
+ * a Bullet Game. Otherwise, the buttom remains displayed.
+ */
 if (document.querySelector("#main-wrap > main > div.round__app.variant-standard > div.rcontrols > div")){
     let new_opponent = document.querySelector(
         "#main-wrap > main > div.round__app.variant-standard > div.rcontrols > div > a"
@@ -149,7 +149,7 @@ if (document.querySelector("#main-wrap > main > div.round__app.variant-standard 
     chrome.storage.local.get(['block_blitz_storage'], function(result) {
         // check if blitz games are blocked
         if (result['block_blitz_storage']){
-            
+
             let substrings = ["1+0", "2+1", "3+0", "3+2", "5+0", "5+3"];
             compare_strings(substrings, link);
             
@@ -161,7 +161,12 @@ if (document.querySelector("#main-wrap > main > div.round__app.variant-standard 
     })
 }
 
-
+/**
+ * This function compares the link of the "new opponent" button with the substrings
+ * of game types that are blocked. If they match, the button is hidden.
+ * @param  substrings - an array of substrings, contains bullet or bullet and blitz 
+ * @param  link - the link of the button
+ */
 function compare_strings(substrings, link){
     if (substrings.some(str => link.includes(str))){
         // if the current game is a Bullet or Blitz Game, do not display the New Opponent button
