@@ -26,7 +26,8 @@ const mutationObserver = new MutationObserver(mutations => {
 mutationObserver.observe(parent_lobby, {childList: true});
 
 /*
-* This function removes the two divs for Bullet Games in the Quick Pairing Menu.
+* This function removes the two divs for Bullet Games in the Quick Pairing Menu
+* and, if set in the options, the four divs for Blitz Games.
 */
 function remove_elements_QP(){
     // remove bullet
@@ -64,7 +65,7 @@ function lobby_open(){
     );
 
     const mutationObserver_lobby = new MutationObserver(mutations => {
-        // lobby is refreshed -> remove Nullet Games once again
+        // lobby is refreshed -> remove Bullet Games once again
         remove_elements_lobby();
     });
     
@@ -72,7 +73,10 @@ function lobby_open(){
     
 }
 
-
+/*
+* This function removes elements from the lobby. It hides Bullet Games and, if 
+* set in the options, also Blitz Games by reading the games' titles
+*/
 function remove_elements_lobby(){
 
     games_table = document.querySelector(
@@ -82,25 +86,18 @@ function remove_elements_lobby(){
     var tbody = games_table.getElementsByTagName('tbody')[0];
     var tableRow = tbody.getElementsByTagName('tr');
     
+    // check for current option
     chrome.storage.local.get(['block_blitz_storage'], function(result) {
+        var block_blitz_games = false;
         if (result['block_blitz_storage']){
-            remove_elements_lobby(true)
-            // loop through all games. if Bullet -> set display to none 
-            for (var t = 0; t < tableRow.length; t++){
-                var game_title = tableRow[t].title;
-                // use substring bullet to remove both bullet, ultrabullet and blitz
-                if (game_title.includes("Bullet") || game_title.includes("Blitz")){
-                    tableRow[t].style.display = "none";
-                }
-            }
+            block_blitz_games = true;
         }
-        else{
-            for (var t = 0; t < tableRow.length; t++){
-                var game_title = tableRow[t].title;
-                // use substring bullet to remove both bullet and ultrabullet
-                if (game_title.includes("Bullet")){
-                    tableRow[t].style.display = "none";
-                }
+        // loop through all games. if Bullet -> set display to none 
+        for (var t = 0; t < tableRow.length; t++){
+            var game_title = tableRow[t].title;
+            // use substring bullet to remove both bullet, ultrabullet and blitz
+            if (game_title.includes("Bullet") || (block_blitz_games && game_title.includes("Blitz"))){
+                tableRow[t].style.display = "none";
             }
         }
     });
