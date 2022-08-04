@@ -5,13 +5,12 @@ chrome.storage.local.get(['block_blitz_storage'], function(result) {
     }
   });
 
-
+        //document.querySelector("#main-wrap > main > div.lobby__table > div.lobby__start")
 // parent element with 4 different tabs: Quick Pairing, Lobby, Correspondence, Games in play
 const parent_lobby = document.querySelector("#main-wrap > main");
 
 // the mutation observer detects when another tab in parent_lobby is clicked.
 const mutationObserver = new MutationObserver(mutations => {
-
     // lobby is opened
     if (mutations[0].addedNodes[0].className == "lobby__app lobby__app-real_time"){
         lobby_open();
@@ -120,17 +119,7 @@ else if (document.querySelector("#main-wrap > main > div.lobby__app.lobby__app-r
  */
 
 if (document.querySelector("#modal-wrap > div > div.setup-content > div.time-mode-config.optional-config > div.time-choice.range > input")){
-    let slider = document.querySelector(
-        "#modal-wrap > div > div.setup-content > div.time-mode-config.optional-config > div.time-choice.range > input"
-    );
-
-    slider.min = 7;
-
-    chrome.storage.local.get(['block_blitz_storage'], function(result) {
-        if (result['block_blitz_storage']){
-            slider.min = 14;
-        }
-    });
+    change_slider();
 }
 
 
@@ -177,3 +166,26 @@ function compare_strings(substrings, link){
         document.querySelector("#main-wrap > main > div.round__app.variant-standard > div.rcontrols > div > a:nth-child(2)").style.display = "block";
     }
 }
+
+// "create game button"
+const create_game = document.querySelector(
+    "#main-wrap > main > div.lobby__table > div.lobby__start > a.button.button-metal.config_hook"
+    )
+create_game.addEventListener('click', change_slider);
+
+// changing the slider, not used rn 
+function change_slider(){
+    
+    let slider = document.querySelector(
+        "#modal-wrap > div > div.setup-content > div.time-mode-config.optional-config > div.time-choice.range > input"
+    );
+
+    slider.min = 7;
+
+    chrome.storage.local.get(['block_blitz_storage'], function(result) {
+        if (result['block_blitz_storage']){
+            slider.min = 14;
+        }
+    });
+}
+
