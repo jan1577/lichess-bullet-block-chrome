@@ -5,7 +5,7 @@ chrome.storage.local.get(['block_blitz_storage'], function(result) {
     }
   });
 
-        //document.querySelector("#main-wrap > main > div.lobby__table > div.lobby__start")
+
 // parent element with 4 different tabs: Quick Pairing, Lobby, Correspondence, Games in play
 const parent_lobby = document.querySelector("#main-wrap > main");
 
@@ -23,6 +23,22 @@ const mutationObserver = new MutationObserver(mutations => {
 });
 // adding the observer to the parent_lobby
 mutationObserver.observe(parent_lobby, {childList: true});
+
+
+// div that contains the second "create a game" button
+const lobby_start = document.querySelector("#main-wrap > main > div.lobby__table")
+
+// observing changes, as the button changes it's class name when clicked
+const mutationObserver_lobby_start = new MutationObserver(mutations => {
+    // if statement to check whether the button was clicked or the div closed
+    if (document.querySelector("#main-wrap > main > div.lobby__table > div.lobby__start > a.button.button-metal.config_hook.active")){
+        change_slider();
+    }
+    
+});
+
+mutationObserver_lobby_start.observe(lobby_start, {childList: true})
+
 
 /**
  * This function removes the two divs for Bullet Games in the Quick Pairing Menu
@@ -52,6 +68,7 @@ function remove_elements_QP(){
     });
 }
 
+
 /**
  * This function waits for updates in the Lobby. Whenever new games are added,
  * {remove_bullet_lobby} is called to filter and remove the Bullet Games.
@@ -70,36 +87,6 @@ function lobby_open(){
     
     mutationObserver_lobby.observe(games_table, {childList: true, subtree: true})
     
-}
-
-/**
- * This function removes elements from the lobby. It hides Bullet Games and, if 
- * set in the options, also Blitz Games by reading the games' titles
- */
-function remove_elements_lobby(){
-
-    games_table = document.querySelector(
-        "#main-wrap > main > div.lobby__app.lobby__app-real_time > div.lobby__app__content.lreal_time > table"
-    );
-    
-    var tbody = games_table.getElementsByTagName('tbody')[0];
-    var tableRow = tbody.getElementsByTagName('tr');
-    
-    // check for current option
-    chrome.storage.local.get(['block_blitz_storage'], function(result) {
-        var block_blitz_games = false;
-        if (result['block_blitz_storage']){
-            block_blitz_games = true;
-        }
-        // loop through all games. if Bullet -> set display to none 
-        for (var t = 0; t < tableRow.length; t++){
-            var game_title = tableRow[t].title;
-            // use substring bullet to remove both bullet, ultrabullet and blitz
-            if (game_title.includes("Bullet") || (block_blitz_games && game_title.includes("Blitz"))){
-                tableRow[t].style.display = "none";
-            }
-        }
-    });
 }
 
 
@@ -150,6 +137,7 @@ if (document.querySelector("#main-wrap > main > div.round__app.variant-standard 
     })
 }
 
+
 /**
  * This function compares the link of the "new opponent" button with the substrings
  * of game types that are blocked. If they match, the button is hidden.
@@ -167,24 +155,49 @@ function compare_strings(substrings, link){
     }
 }
 
-// "create game button"
-const create_game = document.querySelector(
-    "#main-wrap > main > div.lobby__table > div.lobby__start > a.button.button-metal.config_hook"
-    )
-create_game.addEventListener('click', change_slider);
 
-// changing the slider, not used rn 
+// changing the slider
 function change_slider(){
     
     let slider = document.querySelector(
         "#modal-wrap > div > div.setup-content > div.time-mode-config.optional-config > div.time-choice.range > input"
     );
-
     slider.min = 7;
 
     chrome.storage.local.get(['block_blitz_storage'], function(result) {
         if (result['block_blitz_storage']){
             slider.min = 14;
+        }
+    });
+}
+
+
+/**
+ * This function removes elements from the lobby. It hides Bullet Games and, if 
+ * set in the options, also Blitz Games by reading the games' titles
+ */
+ function remove_elements_lobby(){
+
+    games_table = document.querySelector(
+        "#main-wrap > main > div.lobby__app.lobby__app-real_time > div.lobby__app__content.lreal_time > table"
+    );
+    
+    var tbody = games_table.getElementsByTagName('tbody')[0];
+    var tableRow = tbody.getElementsByTagName('tr');
+    
+    // check for current option
+    chrome.storage.local.get(['block_blitz_storage'], function(result) {
+        var block_blitz_games = false;
+        if (result['block_blitz_storage']){
+            block_blitz_games = true;
+        }
+        // loop through all games. if Bullet -> set display to none 
+        for (var t = 0; t < tableRow.length; t++){
+            var game_title = tableRow[t].title;
+            // use substring bullet to remove both bullet, ultrabullet and blitz
+            if (game_title.includes("Bullet") || (block_blitz_games && game_title.includes("Blitz"))){
+                tableRow[t].style.display = "none";
+            }
         }
     });
 }
