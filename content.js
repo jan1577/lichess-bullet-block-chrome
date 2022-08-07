@@ -166,7 +166,7 @@ function change_slider(){
 
     chrome.storage.local.get(['block_blitz_storage'], function(result) {
         if (result['block_blitz_storage']){
-            slider.min = 14;
+            slider.min = 12;
         }
     });
 }
