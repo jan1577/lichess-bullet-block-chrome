@@ -8,7 +8,7 @@ It removes all options to start a Bullet Game, only allowing Blitz, Rapid, Class
 ## Setup
 You can get the extension in the Chrome Webstore or add it to your browser manually.
 
-To download it from the webstore, click here [here] (https://chrome.google.com/webstore/detail/lichessbulletblock/hggjliiolhipmgoomadfmpdlafknhpmd).
+To download it from the webstore, click [here](https://chrome.google.com/webstore/detail/lichessbulletblock/hggjliiolhipmgoomadfmpdlafknhpmd).
 
 To add it manually, follow the steps below.
 Clone the repository or download as a ZIP-file and unzip the files. Next, go to chrome://extensions/ and turn on developer mode. 
