@@ -26,18 +26,22 @@ mutationObserver.observe(parent_lobby, {childList: true});
 
 
 // div that contains the second "create a game" button
-const lobby_start = document.querySelector("#main-wrap > main > div.lobby__table")
+if (document.querySelector("#main-wrap > main > div.lobby__table")){
+  const lobby_start = document.querySelector("#main-wrap > main > div.lobby__table");
 
-// observing changes, as the button changes it's class name when clicked
-const mutationObserver_lobby_start = new MutationObserver(mutations => {
-    // if statement to check whether the button was clicked or the div closed
-    if (document.querySelector("#main-wrap > main > div.lobby__table > div.lobby__start > a.button.button-metal.config_hook.active")){
-        change_slider();
-    }
-    
-});
+  // observing changes, as the button changes it's class name when clicked
+  const mutationObserver_lobby_start = new MutationObserver(mutations => {
+      // if statement to check whether the button was clicked or the div closed
+      if (document.querySelector("#main-wrap > main > div.lobby__table > div.lobby__start > a.button.button-metal.config_hook.active")){
+          change_slider();
+      }
 
-mutationObserver_lobby_start.observe(lobby_start, {childList: true})
+  });
+
+  mutationObserver_lobby_start.observe(lobby_start, {childList: true});
+
+}
+
 
 
 /**
@@ -54,7 +58,7 @@ function remove_elements_QP(){
     // get value for blitz from storage; if true, remove blitz values
 
     chrome.storage.local.get(['block_blitz_storage'], function(result) {
-        
+
         if (result['block_blitz_storage']){
             let _blitz1 = document.querySelector('[data-id="3+0"]');
             let _blitz2 = document.querySelector('[data-id="3+2"]');
@@ -84,9 +88,9 @@ function lobby_open(){
         // lobby is refreshed -> remove Bullet Games once again
         remove_elements_lobby();
     });
-    
+
     mutationObserver_lobby.observe(games_table, {childList: true, subtree: true})
-    
+
 }
 
 
@@ -111,14 +115,14 @@ if (document.querySelector("#modal-wrap > div > div.setup-content > div.time-mod
 
 
 /*
- * The following section is used to remove the "New Opponent" Button if the current game is 
+ * The following section is used to remove the "New Opponent" Button if the current game is
  * a Bullet Game. Otherwise, the buttom remains displayed.
  */
 if (document.querySelector("#main-wrap > main > div.round__app.variant-standard > div.rcontrols > div")){
     let new_opponent = document.querySelector(
         "#main-wrap > main > div.round__app.variant-standard > div.rcontrols > div > a"
     );
-    
+
     // href for new game
     let link = new_opponent.href.toString();
 
@@ -128,7 +132,7 @@ if (document.querySelector("#main-wrap > main > div.round__app.variant-standard 
 
             let substrings = ["1+0", "2+1", "3+0", "3+2", "5+0", "5+3"];
             compare_strings(substrings, link);
-            
+
         // else: only block bullet games
         } else {
             let substrings = ["1+0", "2+1"]
@@ -141,7 +145,7 @@ if (document.querySelector("#main-wrap > main > div.round__app.variant-standard 
 /**
  * This function compares the link of the "new opponent" button with the substrings
  * of game types that are blocked. If they match, the button is hidden.
- * @param  substrings - an array of substrings, contains bullet or bullet and blitz 
+ * @param  substrings - an array of substrings, contains bullet or bullet and blitz
  * @param  link - the link of the button
  */
 function compare_strings(substrings, link){
@@ -158,7 +162,7 @@ function compare_strings(substrings, link){
 
 // changing the slider
 function change_slider(){
-    
+
     let slider = document.querySelector(
         "#modal-wrap > div > div.setup-content > div.time-mode-config.optional-config > div.time-choice.range > input"
     );
@@ -173,7 +177,7 @@ function change_slider(){
 
 
 /**
- * This function removes elements from the lobby. It hides Bullet Games and, if 
+ * This function removes elements from the lobby. It hides Bullet Games and, if
  * set in the options, also Blitz Games by reading the games' titles
  */
  function remove_elements_lobby(){
@@ -181,17 +185,17 @@ function change_slider(){
     games_table = document.querySelector(
         "#main-wrap > main > div.lobby__app.lobby__app-real_time > div.lobby__app__content.lreal_time > table"
     );
-    
+
     var tbody = games_table.getElementsByTagName('tbody')[0];
     var tableRow = tbody.getElementsByTagName('tr');
-    
+
     // check for current option
     chrome.storage.local.get(['block_blitz_storage'], function(result) {
         var block_blitz_games = false;
         if (result['block_blitz_storage']){
             block_blitz_games = true;
         }
-        // loop through all games. if Bullet -> set display to none 
+        // loop through all games. if Bullet -> set display to none
         for (var t = 0; t < tableRow.length; t++){
             var game_title = tableRow[t].title;
             // use substring bullet to remove both bullet, ultrabullet and blitz
@@ -201,4 +205,3 @@ function change_slider(){
         }
     });
 }
-
