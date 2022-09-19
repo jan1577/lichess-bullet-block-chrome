@@ -205,3 +205,22 @@ function change_slider(){
         }
     });
 }
+
+
+/* Remove Puzzle Storm, Streak and Racer */
+let ar = document.getElementsByTagName('a'),
+    holdarray = [];
+
+Array.from(ar, elem => {
+  if(elem.getAttribute('href') == "/storm"){
+    elem.style.display = 'none'
+  }
+  else if (elem.getAttribute('href') == "/streak"){
+    elem.style.display = 'none'
+  }
+  else if (elem.getAttribute('href') == "/racer"){
+    elem.style.display = 'none'
+  }
+})
+
+
