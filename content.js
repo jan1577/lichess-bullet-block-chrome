@@ -210,7 +210,7 @@ function change_slider(){
 }
 
 
-/* Remove Puzzle Storm, Streak and Racer */
+/* Remove Puzzle Storm, Streak and Racer if selected */
 let ar = document.getElementsByTagName('a'),
     holdarray = [];
 
@@ -218,10 +218,17 @@ Array.from(ar, elem => {
   if(elem.getAttribute('href') == "/storm"){
     // get current option
     chrome.storage.local.get(['block_puzzle_storm'], function(result) {
-        // check if blitz games are blocked
+        // check if puzzle is blocked
+        // if it's a "button" -> remove it
         if (result['block_puzzle_storm']){
-            elem.style.display = 'none'
-        }
+            if(elem.parentElement.role == "group"){
+                elem.style.display = 'none';
+            }
+            // if it's just "text", remove href and styling, but still display
+            else{
+                removeHref(elem);
+            }
+        }  
     });
   }
   else if (elem.getAttribute('href') == "/streak"){
@@ -229,7 +236,12 @@ Array.from(ar, elem => {
     chrome.storage.local.get(['block_puzzle_streak'], function(result) {
         // check if blitz games are blocked
         if (result['block_puzzle_streak']){
-            elem.style.display = 'none'
+            if (elem.parentElement.role == "group"){
+                elem.style.display = 'none'
+            }
+            else{
+                removeHref(elem);
+            }
         }
     });
   }
@@ -238,10 +250,27 @@ Array.from(ar, elem => {
     chrome.storage.local.get(['block_puzzle_racer'], function(result) {
         // check if blitz games are blocked
         if (result['block_puzzle_racer']){
-            elem.style.display = 'none'
+            if (elem.parentElement.role == "group"){
+                elem.style.display = 'none';
+            }   
+            else{
+                removeHref(elem);
+            } 
         }
     });
   }
-})
+});
+
+/* This function is used to remove the href attribute, and styles for elements that should be
+ * blocked, but not removed from the screen (Displayed, but just as plain text).
+ * @param element: html element where attributes are removed
+ */
+function removeHref(element){
+    element.removeAttribute('href');
+    element.style.color = "inherit";
+    element.style.pointerEvents = "none";
+}
+
+
 
 
