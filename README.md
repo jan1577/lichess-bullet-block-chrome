@@ -15,7 +15,9 @@ Clone the repository or download as a ZIP-file and unzip the files. Next, go to 
 Click "Load unpacked" and upload the folder. After installing, you can turn off developer mode.
 
 ## Options
-With the latest update, the extension got an options page which can be found by right-clicking on the extension logo and navigation to "Options".
+The extension has an options page which can be found by right-clicking on the extension logo and navigation to "Options".
 Here, you can select whether you want to additionaly block Blitz Games. After saving, refresh the page to apply the changes.
 
-
+## Update Version 1.1.0
+The extension now provides the option to remove any Puzzle Variants (Puzzle Storm, Puzzle Racer, Puzzle Streak).
+You can select which Variants you want to keep and which should be removed.
