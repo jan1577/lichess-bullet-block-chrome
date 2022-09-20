@@ -2,6 +2,9 @@
 chrome.storage.local.get(['block_blitz_storage'], function(result) {
     if (result == null) {
         chrome.storage.local.set({'block_blitz_storage': false});
+        chrome.storage.local.set({'block_puzzle_storm': false});
+        chrome.storage.local.set({'block_puzzle_streak': false});
+        chrome.storage.local.set({'block_puzzle_racer': false});
     }
   });
 
@@ -213,13 +216,31 @@ let ar = document.getElementsByTagName('a'),
 
 Array.from(ar, elem => {
   if(elem.getAttribute('href') == "/storm"){
-    elem.style.display = 'none'
+    // get current option
+    chrome.storage.local.get(['block_puzzle_storm'], function(result) {
+        // check if blitz games are blocked
+        if (result['block_puzzle_storm']){
+            elem.style.display = 'none'
+        }
+    });
   }
   else if (elem.getAttribute('href') == "/streak"){
-    elem.style.display = 'none'
+    // get current option
+    chrome.storage.local.get(['block_puzzle_streak'], function(result) {
+        // check if blitz games are blocked
+        if (result['block_puzzle_streak']){
+            elem.style.display = 'none'
+        }
+    });
   }
   else if (elem.getAttribute('href') == "/racer"){
-    elem.style.display = 'none'
+    // get current option
+    chrome.storage.local.get(['block_puzzle_racer'], function(result) {
+        // check if blitz games are blocked
+        if (result['block_puzzle_racer']){
+            elem.style.display = 'none'
+        }
+    });
   }
 })
 

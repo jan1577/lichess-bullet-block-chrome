@@ -10,13 +10,6 @@ body, #content{
 h1{
     font-size: medium;
 }
-form {
-    text-align:left;
-}
-
-button {
-    float:left;
-}
 
 a{
     margin:auto;
