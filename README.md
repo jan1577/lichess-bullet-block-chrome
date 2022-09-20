@@ -15,7 +15,7 @@ Clone the repository or download as a ZIP-file and unzip the files. Next, go to 
 Click "Load unpacked" and upload the folder. After installing, you can turn off developer mode.
 
 ## Options
-The extension ghas an options page which can be found by right-clicking on the extension logo and navigation to "Options".
+The extension has an options page which can be found by right-clicking on the extension logo and navigation to "Options".
 Here, you can select whether you want to additionaly block Blitz Games. After saving, refresh the page to apply the changes.
 
 ## Update Version 1.1.0
