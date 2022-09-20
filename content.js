@@ -214,6 +214,7 @@ function change_slider(){
 let ar = document.getElementsByTagName('a'),
     holdarray = [];
 
+/* check all href for links to puzzle variants */ 
 Array.from(ar, elem => {
   if(elem.getAttribute('href') == "/storm"){
     // get current option
@@ -221,7 +222,7 @@ Array.from(ar, elem => {
         // check if puzzle is blocked
         // if it's a "button" -> remove it
         if (result['block_puzzle_storm']){
-            if(elem.parentElement.role == "group"){
+            if(elem.parentElement.role == "group" || elem.className == "storm-play-again button"){
                 elem.style.display = 'none';
             }
             // if it's just "text", remove href and styling, but still display
@@ -231,31 +232,39 @@ Array.from(ar, elem => {
         }  
     });
   }
-  else if (elem.getAttribute('href') == "/streak"){
-    // get current option
-    chrome.storage.local.get(['block_puzzle_streak'], function(result) {
-        // check if blitz games are blocked
-        if (result['block_puzzle_streak']){
-            if (elem.parentElement.role == "group"){
-                elem.style.display = 'none'
-            }
-            else{
-                removeHref(elem);
-            }
-        }
-    });
-  }
   else if (elem.getAttribute('href') == "/racer"){
     // get current option
     chrome.storage.local.get(['block_puzzle_racer'], function(result) {
-        // check if blitz games are blocked
+        // check puzzle racer is blocked
         if (result['block_puzzle_racer']){
             if (elem.parentElement.role == "group"){
                 elem.style.display = 'none';
             }   
             else{
                 removeHref(elem);
+                // remove small icon next to span on left menu bar
+                if (elem.children[1]){
+                    elem.children[1].remove();
+                }
             } 
+        }
+    });
+  }
+  else if (elem.getAttribute('href') == "/streak"){
+    // get current option
+    chrome.storage.local.get(['block_puzzle_streak'], function(result) {
+        // check if puzzle streak blocked
+        if (result['block_puzzle_streak']){
+            if (elem.parentElement.role == "group"){
+                elem.style.display = 'none';
+            }
+            else{
+                removeHref(elem);
+                // remove small icon next to span on left menu bar
+                if (elem.children[1]){
+                    elem.children[1].remove();
+                }
+            }
         }
     });
   }
