@@ -1,4 +1,4 @@
-# lichess-bullet-block
+# LichessBulletBlock
 
 A Chrome Extension to remove Bullet Games from lichess.org.
 
