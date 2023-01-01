@@ -1,4 +1,4 @@
-// first time use: set value to false
+// first time use: set all values to false (only bullet blocked)
 chrome.storage.local.get(['block_blitz_storage'], function(result) {
     if (result == null) {
         chrome.storage.local.set({'block_blitz_storage': false});
@@ -44,7 +44,6 @@ if (document.querySelector("#main-wrap > main > div.lobby__table")){
   mutationObserver_lobby_start.observe(lobby_start, {childList: true});
 
 }
-
 
 
 /**
@@ -108,82 +107,10 @@ else if (document.querySelector("#main-wrap > main > div.lobby__app.lobby__app-r
 
 
 /**
- * The slider is opened when the Create New Game button is clicked.
- * 7 equals three minutes, so the minimum value is set to 7.
- */
-
-if (document.querySelector("#modal-wrap > div > div.setup-content > div.time-mode-config.optional-config > div.time-choice.range > input")){
-    change_slider();
-}
-
-
-/*
- * The following section is used to remove the "New Opponent" Button if the current game is
- * a Bullet Game. Otherwise, the buttom remains displayed.
- */
-if (document.querySelector("#main-wrap > main > div.round__app.variant-standard > div.rcontrols > div")){
-    let new_opponent = document.querySelector(
-        "#main-wrap > main > div.round__app.variant-standard > div.rcontrols > div > a"
-    );
-
-    // href for new game
-    let link = new_opponent.href.toString();
-
-    chrome.storage.local.get(['block_blitz_storage'], function(result) {
-        // check if blitz games are blocked
-        if (result['block_blitz_storage']){
-
-            let substrings = ["1+0", "2+1", "3+0", "3+2", "5+0", "5+3"];
-            compare_strings(substrings, link);
-
-        // else: only block bullet games
-        } else {
-            let substrings = ["1+0", "2+1"]
-            compare_strings(substrings, link);
-        }
-    })
-}
-
-
-/**
- * This function compares the link of the "new opponent" button with the substrings
- * of game types that are blocked. If they match, the button is hidden.
- * @param  substrings - an array of substrings, contains bullet or bullet and blitz
- * @param  link - the link of the button
- */
-function compare_strings(substrings, link){
-    if (substrings.some(str => link.includes(str))){
-        // if the current game is a Bullet or Blitz Game, do not display the New Opponent button
-        document.querySelector("#main-wrap > main > div.round__app.variant-standard > div.rcontrols > div > a:nth-child(2)").style.display = "none";
-    }
-    else {
-        // if not a Bullet Game, display the New Opponent button
-        document.querySelector("#main-wrap > main > div.round__app.variant-standard > div.rcontrols > div > a:nth-child(2)").style.display = "block";
-    }
-}
-
-
-// changing the slider
-function change_slider(){
-
-    let slider = document.querySelector(
-        "#modal-wrap > div > div.setup-content > div.time-mode-config.optional-config > div.time-choice.range > input"
-    );
-    slider.min = 7;
-
-    chrome.storage.local.get(['block_blitz_storage'], function(result) {
-        if (result['block_blitz_storage']){
-            slider.min = 12;
-        }
-    });
-}
-
-
-/**
  * This function removes elements from the lobby. It hides Bullet Games and, if
  * set in the options, also Blitz Games by reading the games' titles
  */
- function remove_elements_lobby(){
+function remove_elements_lobby(){
 
     games_table = document.querySelector(
         "#main-wrap > main > div.lobby__app.lobby__app-real_time > div.lobby__app__content.lreal_time > table"
@@ -210,74 +137,79 @@ function change_slider(){
 }
 
 
-/* Remove Puzzle Storm, Streak and Racer if selected */
-let ar = document.getElementsByTagName('a'),
-    holdarray = [];
-
-/* check all href for links to puzzle variants */ 
-Array.from(ar, elem => {
-  if(elem.getAttribute('href') == "/storm"){
-    // get current option
-    chrome.storage.local.get(['block_puzzle_storm'], function(result) {
-        // check if puzzle is blocked
-        // if it's a "button" -> remove it
-        if (result['block_puzzle_storm']){
-            if(elem.parentElement.role == "group" || elem.className == "storm-play-again button"){
-                elem.style.display = 'none';
-            }
-            // if it's just "text", remove href and styling, but still display
-            else{
-                removeHref(elem);
-            }
-        }  
-    });
-  }
-  else if (elem.getAttribute('href') == "/racer"){
-    // get current option
-    chrome.storage.local.get(['block_puzzle_racer'], function(result) {
-        // check puzzle racer is blocked
-        if (result['block_puzzle_racer']){
-            if (elem.parentElement.role == "group"){
-                elem.style.display = 'none';
-            }   
-            else{
-                removeHref(elem);
-                // remove small icon next to span on left menu bar
-                if (elem.children[1]){
-                    elem.children[1].remove();
-                }
-            } 
-        }
-    });
-  }
-  else if (elem.getAttribute('href') == "/streak"){
-    // get current option
-    chrome.storage.local.get(['block_puzzle_streak'], function(result) {
-        // check if puzzle streak blocked
-        if (result['block_puzzle_streak']){
-            if (elem.parentElement.role == "group"){
-                elem.style.display = 'none';
-            }
-            else{
-                removeHref(elem);
-                // remove small icon next to span on left menu bar
-                if (elem.children[1]){
-                    elem.children[1].remove();
-                }
-            }
-        }
-    });
-  }
-});
-
-/* This function is used to remove the href attribute, and styles for elements that should be
- * blocked, but not removed from the screen (Displayed, but just as plain text).
- * @param element: html element where attributes are removed
+/**
+ * The slider is opened when the Create New Game button is clicked.
+ * {Change slider} changes the min value based on options set.
  */
-function removeHref(element){
-    element.removeAttribute('href');
-    element.style.color = "inherit";
-    element.style.pointerEvents = "none";
+
+if (document.querySelector("#modal-wrap > div > div.setup-content > div.time-mode-config.optional-config > div.time-choice.range > input")){
+    change_slider();
+}
+
+
+// changing minimum value of the slider
+function change_slider(){
+
+    let slider = document.querySelector(
+        "#modal-wrap > div > div.setup-content > div.time-mode-config.optional-config > div.time-choice.range > input"
+    );
+    // minimum blitz value
+    slider.min = 7;
+
+    chrome.storage.local.get(['block_blitz_storage'], function(result) {
+        if (result['block_blitz_storage']){
+            // minimum rapid value
+            slider.min = 12;
+        }
+    });
+}
+
+
+/*
+ * The following section is used to remove the "New Opponent" Button if the current game is
+ * a Bullet Game. Otherwise, the buttom remains displayed.
+ */
+if (document.querySelector("#main-wrap > main > div.round__app.variant-standard > div.rcontrols > div")){
+    let new_opponent = document.querySelector(
+        "#main-wrap > main > div.round__app.variant-standard > div.rcontrols > div > a"
+    );
+
+    // href for new game
+    let link = new_opponent.href.toString();
+
+    chrome.storage.local.get(['block_blitz_storage'], function(result) {
+
+        let substrings = [];
+
+        // check if blitz games are blocked
+        if (result['block_blitz_storage']){
+
+            substrings = ["1+0", "2+1", "3+0", "3+2", "5+0", "5+3"];
+        // else: only block bullet games
+        } else {
+            substrings = ["1+0", "2+1"]
+        
+        }
+        compare_strings(substrings, link);
+    })
+}
+
+
+/**
+ * This function compares the link of the "new opponent" button with the substrings
+ * of game types that are blocked. If they match, the button is hidden.
+ * @param  substrings - an array of substrings, contains bullet or bullet and blitz
+ * @param  link - the link of the button
+ */
+function compare_strings(substrings, link){
+    if (substrings.some(str => link.includes(str))){
+        // if the current game is a Bullet or Blitz Game, do not display the New Opponent button
+        document.querySelector("#main-wrap > main > div.round__app.variant-standard > div.rcontrols > div > a:nth-child(2)").style.display = "none";
+    }
+    else {
+        // if not a Bullet or Blitz Game, display the New Opponent button
+        document.querySelector("#main-wrap > main > div.round__app.variant-standard > div.rcontrols > div > a:nth-child(2)").style.display = "block";
+    }
 }
 
 

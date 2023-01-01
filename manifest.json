@@ -33,7 +33,9 @@
 
     "content_scripts": [
     {
-        "js" : ["content.js"],
+        "js" : ["content.js",
+                "puzzle.js"
+               ],
         "matches" : ["https://lichess.org/*"]
     }]
 }
