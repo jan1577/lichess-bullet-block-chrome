@@ -113,7 +113,7 @@ else if (document.querySelector("#main-wrap > main > div.lobby__app.lobby__app-r
 function remove_elements_lobby(games_table){
 
     let tbody = games_table.getElementsByTagName('tbody')[0];
-    let tableRow = tbody.getElementsByTagName('tr');
+    let tableRows = tbody.getElementsByTagName('tr');
 
     // check for current option
     chrome.storage.local.get(['block_blitz_storage'], function(result) {
@@ -122,11 +122,11 @@ function remove_elements_lobby(games_table){
             block_blitz_games = true;
         }
         // loop through all games. if Bullet -> set display to none
-        for (let t = 0; t < tableRow.length; t++){
-            let game_title = tableRow[t].title;
+        for (let row of tableRows){
+            let game_title = row.title;
             // use substring bullet to remove both bullet, ultrabullet and blitz
             if (game_title.includes("Bullet") || (block_blitz_games && game_title.includes("Blitz"))){
-                tableRow[t].style.display = "none";
+                row.style.display = "none";
             }
         }
     });
