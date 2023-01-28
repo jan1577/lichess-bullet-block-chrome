@@ -66,7 +66,7 @@ function save_options() {
       }
     });
     // restore puzzle variants
-    for (i=0; i<5; i+=2){
+    for (let i=0; i<5; i+=2){
       restore_puzzles(puzzle_array[i], puzzle_array[i+1])
     }
   }
