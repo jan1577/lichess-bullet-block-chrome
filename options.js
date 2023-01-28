@@ -9,7 +9,7 @@ const puzzle_array = ['block_puzzle_streak', 'block_streak', 'block_puzzle_storm
 function save_options() {
 
     // check which box is checked and set value in storage
-    var block_blitz;
+    let block_blitz;
 
     if(document.getElementById('block_blitz').checked) {
         block_blitz = true;
@@ -18,9 +18,9 @@ function save_options() {
     }
     
     // save puzzle variants: get which boxes have been checked by the user
-    var block_racer = false;
-    var block_streak = false;
-    var block_storm = false;
+    let block_racer = false;
+    let block_streak = false;
+    let block_storm = false;
 
     if(document.getElementById('block_racer').checked) {
       block_racer = true;
