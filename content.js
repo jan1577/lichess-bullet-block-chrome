@@ -82,13 +82,13 @@ function remove_elements_QP(){
 function lobby_open(){
 
     // add Mutation observer to <table class"hools__list"> to check if lobby is updated
-    games_table = document.querySelector(
+    let games_table = document.querySelector(
         "#main-wrap > main > div.lobby__app.lobby__app-real_time > div.lobby__app__content.lreal_time > table"
     );
 
     const mutationObserver_lobby = new MutationObserver(mutations => {
         // lobby is refreshed -> remove Bullet Games once again
-        remove_elements_lobby();
+        remove_elements_lobby(games_table);
     });
 
     mutationObserver_lobby.observe(games_table, {childList: true, subtree: true})
@@ -110,24 +110,20 @@ else if (document.querySelector("#main-wrap > main > div.lobby__app.lobby__app-r
  * This function removes elements from the lobby. It hides Bullet Games and, if
  * set in the options, also Blitz Games by reading the games' titles
  */
-function remove_elements_lobby(){
+function remove_elements_lobby(games_table){
 
-    games_table = document.querySelector(
-        "#main-wrap > main > div.lobby__app.lobby__app-real_time > div.lobby__app__content.lreal_time > table"
-    );
-
-    var tbody = games_table.getElementsByTagName('tbody')[0];
-    var tableRow = tbody.getElementsByTagName('tr');
+    let tbody = games_table.getElementsByTagName('tbody')[0];
+    let tableRow = tbody.getElementsByTagName('tr');
 
     // check for current option
     chrome.storage.local.get(['block_blitz_storage'], function(result) {
-        var block_blitz_games = false;
+        let block_blitz_games = false;
         if (result['block_blitz_storage']){
             block_blitz_games = true;
         }
         // loop through all games. if Bullet -> set display to none
-        for (var t = 0; t < tableRow.length; t++){
-            var game_title = tableRow[t].title;
+        for (let t = 0; t < tableRow.length; t++){
+            let game_title = tableRow[t].title;
             // use substring bullet to remove both bullet, ultrabullet and blitz
             if (game_title.includes("Bullet") || (block_blitz_games && game_title.includes("Blitz"))){
                 tableRow[t].style.display = "none";
