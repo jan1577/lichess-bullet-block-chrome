@@ -5,6 +5,8 @@ A Chrome Extension to remove Bullet Games from lichess.org.
 Bullet Games are addictive - this Chrome extension removes all options to launch a Bullet Game on lichess, stopping
 you from wasting your time by chasing the next dopamine push.
 
+In addition, you can disable Blitz Games and select Puzzle modes you want to block.
+
 ## Setup
 You can get the extension in the Chrome Webstore or add it to your browser manually.
 
@@ -15,9 +17,6 @@ Clone the repository or download as a ZIP-file and unzip the files. Next, go to 
 Click "Load unpacked" and upload the folder. After installing, you can turn off developer mode.
 
 ## Options
-The extension has an options page which can be found by right-clicking on the extension logo and navigation to "Options".
-Here, you can select whether you want to additionaly block Blitz Games. After saving, refresh the page to apply the changes.
+The extension has an options page which can be found by right-clicking on the extension logo and navigating to "Options".
+Here, you can set your preferences for Blitz and Puzzles. After saving, refresh the page to apply the changes.
 
-## Update Version 1.1.0
-The extension now provides the option to remove any Puzzle Variants (Puzzle Storm, Puzzle Racer, Puzzle Streak).
-You can select which Variants you want to keep and which should be removed.
