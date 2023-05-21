@@ -117,7 +117,7 @@ function remove_elements_lobby(games_table){
 
     // check for current option
     chrome.storage.local.get(['block_blitz_storage'], function(result) {
-        let block_blitz_games = result['block_blitz_storage']
+        let block_blitz_games = result['block_blitz_storage'];
         
         // loop through all games. if Bullet -> set display to none
         for (let row of tableRows){
