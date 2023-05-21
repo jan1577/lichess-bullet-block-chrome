@@ -1,5 +1,25 @@
 # LichessBulletBlock
 
+<table>
+  <tr>
+    <a href="https://chrome.google.com/webstore/detail/lichessbulletblock/hggjliiolhipmgoomadfmpdlafknhpmd" target="_blank">
+      <img src="images/chrome.svg" alt="Chrome logo" width="30px">
+    </a>
+    <a href="https://chrome.google.com/webstore/detail/lichessbulletblock/hggjliiolhipmgoomadfmpdlafknhpmd" target="_blank">
+      <img src="images/brave.svg" alt="Brave logo" width="30px">
+    </a>
+    <a href="https://chrome.google.com/webstore/detail/lichessbulletblock/hggjliiolhipmgoomadfmpdlafknhpmd" target="_blank">
+      <img src="images/edge.svg" alt="Edge logo" width="30px">
+    </a>
+    <a href="https://chrome.google.com/webstore/detail/lichessbulletblock/hggjliiolhipmgoomadfmpdlafknhpmd" target="_blank">
+      <img src="images/opera.svg" alt="Opera logo" width="30px">
+    </a>   
+    <a href="https://github.com/jan1577/lichess-bullet-block-firefox/blob/main/README.md" target="_blank">
+      <img src="images/firefox.svg" alt="Firefox logo" width="30px">
+    </a>
+  </tr>
+</table>
+
 A Chrome Extension to remove Bullet Games from lichess.org.
 
 Bullet Games are addictive - this Chrome extension removes all options to launch a Bullet Game on lichess, stopping
