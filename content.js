@@ -117,10 +117,8 @@ function remove_elements_lobby(games_table){
 
     // check for current option
     chrome.storage.local.get(['block_blitz_storage'], function(result) {
-        let block_blitz_games = false;
-        if (result['block_blitz_storage']){
-            block_blitz_games = true;
-        }
+        let block_blitz_games = result['block_blitz_storage']
+        
         // loop through all games. if Bullet -> set display to none
         for (let row of tableRows){
             let game_title = row.title;
@@ -184,7 +182,6 @@ if (document.querySelector("#main-wrap > main > div.round__app.variant-standard 
         // else: only block bullet games
         } else {
             substrings = ["1+0", "2+1"]
-        
         }
         compare_strings(substrings, link);
     })
