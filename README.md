@@ -14,7 +14,7 @@
     <a href="https://chrome.google.com/webstore/detail/lichessbulletblock/hggjliiolhipmgoomadfmpdlafknhpmd" target="_blank">
       <img src="images/opera.svg" alt="Opera logo" width="30px">
     </a>   
-    <a href="https://github.com/jan1577/lichess-bullet-block-firefox/blob/main/README.md" target="_blank">
+    <a href="https://addons.mozilla.org/en-US/firefox/addon/lichessbulletblock/" target="_blank">
       <img src="images/firefox.svg" alt="Firefox logo" width="30px">
     </a>
   </tr>
