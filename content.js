@@ -169,22 +169,23 @@ if (document.querySelector("#main-wrap > main > div.round__app.variant-standard 
     );
 
     // href for new game
-    let link = new_opponent.href.toString();
+    if (new_opponent) {
+        let link = new_opponent.href.toString();
+        chrome.storage.local.get(['block_blitz_storage'], function(result) {
 
-    chrome.storage.local.get(['block_blitz_storage'], function(result) {
-
-        let substrings = [];
-
-        // check if blitz games are blocked
-        if (result['block_blitz_storage']){
-
-            substrings = ["1+0", "2+1", "3+0", "3+2", "5+0", "5+3"];
-        // else: only block bullet games
-        } else {
-            substrings = ["1+0", "2+1"]
-        }
-        compare_strings(substrings, link);
-    })
+            let substrings = [];
+    
+            // check if blitz games are blocked
+            if (result['block_blitz_storage']){
+    
+                substrings = ["1+0", "2+1", "3+0", "3+2", "5+0", "5+3"];
+            // else: only block bullet games
+            } else {
+                substrings = ["1+0", "2+1"]
+            }
+            compare_strings(substrings, link);
+        })
+    }
 }
 
 
