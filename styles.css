@@ -1,21 +1,21 @@
-
-body, #content{
+body,
+#content {
     overflow: hidden;
     min-height: 200px;
     min-width: 350px;
-    text-align:center;
+    text-align: center;
     display: block;
 }
 
-h1{
+h1 {
     font-size: medium;
 }
 
-a{
-    margin:auto;
+a {
+    margin: auto;
 }
 
-.fab, .fas{
-	color:black;
-  font-size:20px;
+.fab, .fas {
+    color: black;
+    font-size: 20px;
 }

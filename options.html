@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
     <title>Options</title>
 </head>
+
 <body>
     <div id="content">
         <h1>Do you want to block Blitz Games as well?</h1>
@@ -27,13 +29,23 @@
             <input type="checkbox" id="block_racer" name="block_racer">
             <label for="css">Puzzle Racer</label><br>
         </div>
+        <h1>Do you want to enable quotes?</h1>
+        <form action="/action_page.php">
+            <input type="radio" id="enable-quotes" name="enable-quotes" value="yes">
+            <label for="html">yes</label><br>
+            <input type="radio" id="disable-quotes" name="enable-quotes" value="no">
+            <label for="css">no</label><br>
+        </form>
         <br>
         <button id="save">Save</button>
         <div id="status"></div>
         <br>
-        <a target = "blank" href="https://github.com/jan1577/lichess-bullet-block-chrome"><i class="fab fa-github"></i></a>
-        <a target = "blank" href="https://github.com/jan1577/lichess-bullet-block-chrome/issues"><i class="fas fa-bug"></i></a>
+        <a target="blank" href="https://github.com/jan1577/lichess-bullet-block-chrome"><i
+                class="fab fa-github"></i></a>
+        <a target="blank" href="https://github.com/jan1577/lichess-bullet-block-chrome/issues"><i
+                class="fas fa-bug"></i></a>
     </div>
     <script src="options.js"></script>
 </body>
+
 </html>
