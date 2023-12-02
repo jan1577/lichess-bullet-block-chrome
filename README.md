@@ -38,5 +38,7 @@ Click "Load unpacked" and upload the folder. After installing, you can turn off 
 
 ## Options
 The extension has an options page which can be found by right-clicking on the extension logo and navigating to "Options".
-Here, you can set your preferences for Blitz and Puzzles. After saving, refresh the page to apply the changes.
+Here, you can set your preferences for Blitz and Puzzles. You can also enable or disable quotes that are added to the main page.
+After saving, refresh the page to apply the changes.
+
 
