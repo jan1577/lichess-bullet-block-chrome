@@ -19,3 +19,20 @@ a {
     color: black;
     font-size: 20px;
 }
+
+.review, #status{
+    display: block;
+    margin: 2%;
+}
+
+#save {
+    margin: 3%;
+}
+
+hr.solid {
+    border-top: 3px solid #bbb;
+}
+
+p {
+    margin-bottom: 0;
+}
