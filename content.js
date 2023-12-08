@@ -145,7 +145,8 @@ if (document.querySelector("#modal-wrap > div > div.setup-content > div.time-mod
 function change_slider(){
 
     let slider = document.querySelector(
-        "#modal-wrap > div > div.setup-content > div.time-mode-config.optional-config > div.time-choice.range > input"
+        //"#modal-wrap > div > div.setup-content > div.time-mode-config.optional-config > div.time-choice.range > input"
+        "#main-wrap > main > div.lobby__table > dialog > div.scrollable > div > div.setup-content > div.time-mode-config.optional-config > div.time-choice.range > input"
     );
     // minimum blitz value
     slider.min = 7;
