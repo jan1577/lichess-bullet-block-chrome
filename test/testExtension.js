@@ -42,7 +42,7 @@ describe('Test Quick Pair Removal', function() {
 
     it('should check removal of blitz in quick pairing', async function() {
         await driver.get('chrome-extension://hggjliiolhipmgoomadfmpdlafknhpmd/options.html');
-        await driver.findElement(By.id('block_blitz')).click();
+        await driver.findElement(By.id('block-blitz')).click();
         await driver.findElement(By.id('save')).click();
         await driver.get('https://lichess.org');
 
