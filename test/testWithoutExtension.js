@@ -1,7 +1,14 @@
 const { Builder } = require('selenium-webdriver');
 const { expect } = require('chai');
+const chrome = require("selenium-webdriver/chrome");
 
-let driver = new Builder().forBrowser('chrome').build();
+let chromeOptions = new chrome.Options();
+chromeOptions.addArguments('--headless=new');
+
+let driver = new Builder()
+    .forBrowser('chrome')
+    .setChromeOptions(chromeOptions)
+    .build();
 
 async function doesElementExist(selector, expected) {
     let elementExists = await driver.executeScript(`return document.querySelector('${selector}') !== null`);
