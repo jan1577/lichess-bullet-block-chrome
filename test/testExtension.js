@@ -3,7 +3,7 @@ const chrome = require('selenium-webdriver/chrome');
 const { expect } = require('chai');
 
 let chromeOptions = new chrome.Options();
-chromeOptions.addArguments('--headless=new', `--load-extension=${__dirname}/../`);
+chromeOptions.addArguments('--headless=new', `--load-extension=${__dirname}/../src/`);
 
 let driver = new Builder()
     .forBrowser('chrome')
