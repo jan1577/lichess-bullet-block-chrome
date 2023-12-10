@@ -34,7 +34,7 @@ To download it from the webstore, click [here](https://chrome.google.com/webstor
 
 To add it manually, follow the steps below.
 Clone the repository or download as a ZIP-file and unzip the files. Next, go to chrome://extensions/ and turn on developer mode. 
-Click "Load unpacked" and upload the folder. After installing, you can turn off developer mode.
+Click "Load unpacked" and upload the src directory. After installing, you can turn off developer mode.
 
 ## Options
 The extension has an options page which can be found by right-clicking on the extension logo and navigating to "Options".
