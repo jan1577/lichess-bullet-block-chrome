@@ -51,6 +51,15 @@ describe('Test Quick Pair Removal', function() {
         }
     });
 
+    it('should check if quotes are added', async function() {
+        await driver.get('chrome-extension://hggjliiolhipmgoomadfmpdlafknhpmd/options.html');
+        await driver.findElement(By.id('enable-quotes')).click();
+        await driver.findElement(By.id('save')).click();
+        await driver.get('https://lichess.org');
+
+        await doesElementExist('#quote', true);
+    });
+
     after(async function() {
         await driver.quit();
     });
