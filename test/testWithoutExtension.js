@@ -15,7 +15,7 @@ async function doesElementExist(selector, expected) {
     expect(elementExists).to.equal(expected);
 }
 
-describe('Test Quick Pair Removal without extension', function() {
+describe('Test Quick Pair elements to be removed exist without extension', function() {
     this.timeout(0); // Disable Mocha's timeout
 
     before(async function() {
