@@ -1,19 +1,15 @@
-const { Builder, By } = require('selenium-webdriver');
+const { Builder, By, until } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 const { expect } = require('chai');
 
-let chromeOptions = new chrome.Options();
-chromeOptions.addArguments('--headless=new', `--load-extension=${__dirname}/../src/`);
+const chromeOptions = new chrome.Options();
+chromeOptions.addArguments(`--load-extension=${__dirname}/../src/`, '--lang=en');
+chromeOptions.addArguments('--headless=new');
 
-let driver = new Builder()
+const driver = new Builder()
     .forBrowser('chrome')
     .setChromeOptions(chromeOptions)
     .build();
-
-async function doesElementExist(selector, expected) {
-    let elementExists = await driver.executeScript(`return document.querySelector('${selector}') !== null`);
-    expect(elementExists).to.equal(expected);
-}
 
 // quick pairing selectors
 const bulletArray = [
@@ -27,61 +23,76 @@ const blitzArray = [
     '[data-id="5+3"]'
 ];
 
+async function doesElementExist(selector) {
+    return await driver.executeScript(`return document.querySelector('${selector}') !== null`);
+}
+
+async function isElementDisplayed(selector) {
+    return await driver.executeScript(`return document.querySelector('${selector}').style.display !== 'none'`);
+}
+
+async function setOptions(blockBlitz=false, enableQuotes=false, blockPuzzleVariants=false) {
+    await driver.get('chrome-extension://hggjliiolhipmgoomadfmpdlafknhpmd/options.html');
+
+    if (blockBlitz) {
+        await driver.executeScript("document.getElementById('block-blitz').checked = true;");
+    } else {
+        await driver.executeScript("document.getElementById('enable-blitz').checked = true;");
+    }
+
+    if (enableQuotes) {
+        await driver.executeScript("document.getElementById('enable-quotes').checked = true;");
+    } else {
+        await driver.executeScript("document.getElementById('disable-quotes').checked = true;");
+    }
+        
+    await driver.wait(until.elementLocated(By.id('block-storm')), 5000);
+    await driver.executeScript("document.getElementById('block-storm').checked = arguments[0];", blockPuzzleVariants);
+    await driver.wait(until.elementLocated(By.id('block-streak')), 5000);
+    await driver.executeScript("document.getElementById('block-streak').checked = arguments[0];", blockPuzzleVariants);
+    await driver.wait(until.elementLocated(By.id('block-racer')), 5000);
+    await driver.executeScript("document.getElementById('block-racer').checked = arguments[0];", blockPuzzleVariants);
+
+    await driver.findElement(By.id('save')).click();
+}
+
+
 describe('Test Quick Pair Removal', function() {
     this.timeout(0); // Disable Mocha's timeout
 
-    before(async function() {
-        await driver.get('https://lichess.org');
-    });
-
     it('should check removal of bullet in quick pairing', async function() {
+        await driver.get('https://lichess.org');
+        
         for (let selector of bulletArray) {
-            await doesElementExist(selector, false);
+            expect(await doesElementExist(selector), false);
         }
     });
 
     it('should check removal of blitz in quick pairing', async function() {
-        await driver.get('chrome-extension://hggjliiolhipmgoomadfmpdlafknhpmd/options.html');
-        await driver.findElement(By.id('block-blitz')).click();
-        await driver.findElement(By.id('save')).click();
+        setOptions(true, false, false);
         await driver.get('https://lichess.org');
 
         for (let selector of blitzArray) {
-            await doesElementExist(selector, false);
+            expect(await doesElementExist(selector), false);
         }
     });
 
     it('should check if quotes are added', async function() {
-        await driver.get('chrome-extension://hggjliiolhipmgoomadfmpdlafknhpmd/options.html');
-        await driver.findElement(By.id('enable-quotes')).click();
-        await driver.findElement(By.id('save')).click();
+        setOptions(false, true, false);
+        
         await driver.get('https://lichess.org');
-
-        await doesElementExist('#quote', true);
+        expect(await doesElementExist('#quote'), true);
     });
 
     it('should check if puzzle variants are removed', async function() {
-        await driver.get('chrome-extension://hggjliiolhipmgoomadfmpdlafknhpmd/options.html');
-        await driver.findElement(By.id('block-storm')).click();
-        await driver.findElement(By.id('block-streak')).click();
-        await driver.findElement(By.id('block-racer')).click();
-        await driver.findElement(By.id('save')).click();
-
-        await driver.findElement(By.id('save')).click();
+        await setOptions(false, false, true)
         await driver.get('https://lichess.org');
-        // hover over element with href="/training"
-        await driver.actions().move({origin: driver.findElement(By.linkText('Puzzles'))}).perform();
 
-        // check that the element with the href attribute /storm has display: none
-        let storm = await driver.executeScript(`return document.querySelector('[href="/storm"]').style.display === "none"`);
-        // check that the element with the href attribute /streak has display: none
-        let streak = await driver.executeScript(`return document.querySelector('[href="/streak"]').style.display === "none"`);
-        // check that the element with the href attribute /racer has display: none
-        let racer = await driver.executeScript(`return document.querySelector('[href="/racer"]').style.display === "none"`);
-
-        expect(racer).to.equal(true);
-        expect(storm).to.equal(true);
-        expect(streak).to.equal(true);
+        expect(await isElementDisplayed('#topnav > section:nth-child(2) > div > a:nth-child(3)')).to.be.false;
+        expect(await isElementDisplayed('#topnav > section:nth-child(2) > div > a:nth-child(4)')).to.be.false;
+        expect(await isElementDisplayed('#topnav > section:nth-child(2) > div > a:nth-child(5)')).to.be.false;
+       
+        await driver.get('https://lichess.org');
     });
 
     after(async function() {
