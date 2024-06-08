@@ -60,6 +60,30 @@ describe('Test Quick Pair Removal', function() {
         await doesElementExist('#quote', true);
     });
 
+    it('should check if puzzle variants are removed', async function() {
+        await driver.get('chrome-extension://hggjliiolhipmgoomadfmpdlafknhpmd/options.html');
+        await driver.findElement(By.id('block-storm')).click();
+        await driver.findElement(By.id('block-streak')).click();
+        await driver.findElement(By.id('block-racer')).click();
+        await driver.findElement(By.id('save')).click();
+
+        await driver.findElement(By.id('save')).click();
+        await driver.get('https://lichess.org');
+        // hover over element with href="/training"
+        await driver.actions().move({origin: driver.findElement(By.linkText('Puzzles'))}).perform();
+
+        // check that the element with the href attribute /storm has display: none
+        let storm = await driver.executeScript(`return document.querySelector('[href="/storm"]').style.display === "none"`);
+        // check that the element with the href attribute /streak has display: none
+        let streak = await driver.executeScript(`return document.querySelector('[href="/streak"]').style.display === "none"`);
+        // check that the element with the href attribute /racer has display: none
+        let racer = await driver.executeScript(`return document.querySelector('[href="/racer"]').style.display === "none"`);
+
+        expect(racer).to.equal(true);
+        expect(storm).to.equal(true);
+        expect(streak).to.equal(true);
+    });
+
     after(async function() {
         await driver.quit();
     });
