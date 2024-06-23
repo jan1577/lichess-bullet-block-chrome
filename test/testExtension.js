@@ -88,9 +88,9 @@ describe('Test Quick Pair Removal', function() {
         await setOptions(false, false, true)
         await driver.get('https://lichess.org');
 
-        expect(await isElementDisplayed('#topnav > section:nth-child(2) > div > a:nth-child(3)')).to.be.false;
         expect(await isElementDisplayed('#topnav > section:nth-child(2) > div > a:nth-child(4)')).to.be.false;
         expect(await isElementDisplayed('#topnav > section:nth-child(2) > div > a:nth-child(5)')).to.be.false;
+        expect(await isElementDisplayed('#topnav > section:nth-child(2) > div > a:nth-child(6)')).to.be.false;
        
         await driver.get('https://lichess.org');
     });
